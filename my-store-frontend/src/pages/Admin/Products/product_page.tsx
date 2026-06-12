@@ -251,7 +251,7 @@ const AdminProducts: React.FC = () => {
                         <div className="table-img-wrapper">
                           <img
                             src={
-                              product.image_url ||
+                              product.image ||
                               "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=150"
                             }
                             alt={product.title}

@@ -16,7 +16,7 @@ const Register = React.lazy(
   () => import("../pages/Auth/Register/register_page"),
 );
 const AdminDashboard = React.lazy(() => import("../pages/Admin/Dashboard"));
-const AdminProducts = React.lazy(() => import("../pages/Admin/Products"));
+const AdminProducts = React.lazy(() => import("../pages/Admin/Products/product_page"));
 const AdminOrders = React.lazy(() => import("../pages/Admin/Orders"));
 
 // Layouts

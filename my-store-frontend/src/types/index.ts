@@ -22,7 +22,7 @@ export interface Product {
   product_id: number;
   title: string;
   description: string | null;
-  image_url: string | null;
+  image: string | null;
   unit_price: number;
   available_quantity: number;
   is_active?: boolean;
