@@ -19,7 +19,7 @@ export const useApi = <T>(fetchFn: () => Promise<T>, deps: unknown[] = []) => {
       const data = await fetchFn();
       setState({ data, loading: false, error: null });
     } catch (err: unknown) {
-      const message = err instanceof Error ? err.message : "เกิดข้อผิดพลาด";
+      const message = err instanceof Error ? err.message : "An error occurred";
       setState({ data: null, loading: false, error: message });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

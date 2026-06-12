@@ -23,7 +23,7 @@ const Login: React.FC = () => {
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     if (!username || !password) {
-      setError("กรุณากรอกชื่อผู้ใช้และรหัสผ่าน");
+      setError("Please enter username and password");
       return;
     }
     setLoading(true);
@@ -38,7 +38,7 @@ const Login: React.FC = () => {
           `Error: ${err.response.status} - ${JSON.stringify(err.response.data)}`,
         );
       } else if (err.request) {
-        setError("Network Error: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้");
+        setError("Network Error: Unable to connect to server");
       } else {
         setError(`Error: ${err.message}`);
       }

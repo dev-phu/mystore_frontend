@@ -3,7 +3,9 @@ import { Link } from "react-router-dom";
 import { ROUTES } from "../../../constants";
 import { formatPrice } from "../../../utils";
 import type { Product } from "../../../types";
+import { useCartContext } from "../../../context";
 import { ShoppingBag } from "lucide-react";
+import toast from "react-hot-toast";
 import "./ProductCard.css";
 
 interface ProductCardProps {
@@ -11,10 +13,19 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { addItem } = useCartContext();
+
   // Use placeholder image if backend doesn't provide one
   const imageUrl =
     product.image ||
     "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&q=80&w=800";
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addItem(product, 1);
+    toast.success(`Added ${product.title} to cart`);
+  };
 
   return (
     <div className="product-card">
@@ -49,6 +60,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
         <button
           className="product-card__add-btn"
           disabled={product.available_quantity <= 0}
+          onClick={handleAddToCart}
           aria-label="Add to cart"
         >
           <ShoppingBag size={18} className="add-icon" />

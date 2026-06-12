@@ -2,7 +2,7 @@ import React from "react";
 
 const Orders: React.FC = () => (
   <div className="page">
-    <h1>คำสั่งซื้อของฉัน</h1>
+    <h1>My Orders</h1>
   </div>
 );
 

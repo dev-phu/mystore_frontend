@@ -8,11 +8,11 @@ export const formatPrice = (amount: number): string =>
   );
 
 /**
- * Format an ISO date string to Thai locale.
- * e.g. formatDate("2024-01-15") => "15 ม.ค. 2567"
+ * Format an ISO date string to English locale.
+ * e.g. formatDate("2024-01-15") => "Jan 15, 2024"
  */
 export const formatDate = (iso: string): string =>
-  new Intl.DateTimeFormat("th-TH", {
+  new Intl.DateTimeFormat("en-US", {
     year: "numeric",
     month: "short",
     day: "numeric",

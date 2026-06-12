@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { productService } from "../../../services/product.service";
 import type { Product } from "../../../types";
-import { Plus, Trash2, Image as ImageIcon, Eye, EyeOff } from "lucide-react";
+import {
+  Plus,
+  Trash2,
+  Image as ImageIcon,
+  Eye,
+  EyeOff,
+  Edit2,
+  X,
+} from "lucide-react";
 import "./AdminProducts.css";
 
 const AdminProducts: React.FC = () => {
@@ -9,6 +17,8 @@ const AdminProducts: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
   // Form State
   const [title, setTitle] = useState("");
@@ -30,10 +40,33 @@ const AdminProducts: React.FC = () => {
       setError(null);
     } catch (err: any) {
       console.error("Failed to fetch my products", err);
-      setError("ไม่สามารถดึงข้อมูลสินค้าของคุณได้");
+      setError("Failed to fetch your products");
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setTitle("");
+    setDescription("");
+    setUnitPrice("");
+    setAvailableQuantity("");
+    setImageFile(null);
+    setImagePreview(null);
+    setEditingProduct(null);
+    setError(null);
+  };
+
+  const handleEditClick = (product: Product) => {
+    setEditingProduct(product);
+    setTitle(product.title);
+    setDescription(product.description || "");
+    setUnitPrice(product.unit_price.toString());
+    setAvailableQuantity(product.available_quantity.toString());
+    setImagePreview(product.image); // This is absolute url
+    setImageFile(null);
+    setError(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -51,7 +84,7 @@ const AdminProducts: React.FC = () => {
   const handleAddProduct = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!title || !unitPrice || !availableQuantity) {
-      setError("กรุณากรอกข้อมูลที่จำเป็นให้ครบถ้วน");
+      setError("Please fill in all required fields");
       return;
     }
 
@@ -68,36 +101,43 @@ const AdminProducts: React.FC = () => {
         formData.append("image", imageFile);
       }
 
-      await productService.create(formData);
+      if (editingProduct) {
+        await productService.update(editingProduct.product_id, formData);
+      } else {
+        await productService.create(formData);
+      }
 
       // Reset form
-      setTitle("");
-      setDescription("");
-      setUnitPrice("");
-      setAvailableQuantity("");
-      setImageFile(null);
-      setImagePreview(null);
+      resetForm();
 
       // Refresh product list
       await fetchMyProducts();
     } catch (err: any) {
-      console.error("Error creating product", err);
-      setError("เกิดข้อผิดพลาดในการเพิ่มสินค้า");
+      console.error("Error saving product", err);
+      setError(
+        editingProduct
+          ? "Error updating product"
+          : "Error adding product",
+      );
     } finally {
       setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id: number) => {
-    if (!window.confirm("คุณต้องการลบสินค้านี้ใช่หรือไม่?")) return;
+    if (!window.confirm("Are you sure you want to delete this product?")) return;
 
     try {
       await productService.delete(id);
       // Instead of removing from list, update its is_active to false
-      setProducts(products.map((p) => (p.product_id === id ? { ...p, is_active: false } : p)));
+      setProducts(
+        products.map((p) =>
+          p.product_id === id ? { ...p, is_active: false } : p,
+        ),
+      );
     } catch (err) {
       console.error("Failed to delete product", err);
-      alert("ไม่สามารถลบสินค้าได้");
+      alert("Failed to delete product");
     }
   };
 
@@ -106,12 +146,12 @@ const AdminProducts: React.FC = () => {
       await productService.toggleActive(id, !currentStatus);
       setProducts(
         products.map((p) =>
-          p.product_id === id ? { ...p, is_active: !currentStatus } : p
-        )
+          p.product_id === id ? { ...p, is_active: !currentStatus } : p,
+        ),
       );
     } catch (err) {
       console.error("Failed to toggle product status", err);
-      alert("ไม่สามารถเปลี่ยนสถานะสินค้าได้");
+      alert("Failed to toggle product status");
     }
   };
 
@@ -123,9 +163,9 @@ const AdminProducts: React.FC = () => {
       </div>
 
       <div className="admin-content">
-        {/* Add Product Form */}
+        {/* Add/Edit Product Form */}
         <div className="admin-card add-product-section">
-          <h2>Add New Product</h2>
+          <h2>{editingProduct ? "Edit Product" : "Add New Product"}</h2>
           {error && <div className="admin-error">{error}</div>}
 
           <form onSubmit={handleAddProduct} className="add-product-form">
@@ -207,19 +247,37 @@ const AdminProducts: React.FC = () => {
               </div>
             </div>
 
-            <button
-              type="submit"
-              className="btn-primary submit-btn"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? (
-                "Adding..."
-              ) : (
-                <>
-                  <Plus size={18} /> Add Product
-                </>
+            <div className="form-actions">
+              <button
+                type="submit"
+                className="btn-primary submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? (
+                  editingProduct ? (
+                    "Saving..."
+                  ) : (
+                    "Adding..."
+                  )
+                ) : (
+                  <>
+                    {editingProduct ? <Edit2 size={18} /> : <Plus size={18} />}
+                    {editingProduct ? "Save Changes" : "Add Product"}
+                  </>
+                )}
+              </button>
+
+              {editingProduct && (
+                <button
+                  type="button"
+                  className="btn-secondary cancel-btn"
+                  onClick={resetForm}
+                  disabled={isSubmitting}
+                >
+                  <X size={18} /> Cancel
+                </button>
               )}
-            </button>
+            </div>
           </form>
         </div>
 
@@ -270,19 +328,46 @@ const AdminProducts: React.FC = () => {
                         </span>
                       </td>
                       <td>
-                        <span className={`status-badge ${product.is_active !== false ? "active" : "inactive"}`}>
+                        <span
+                          className={`status-badge ${product.is_active !== false ? "active" : "inactive"}`}
+                        >
                           {product.is_active !== false ? "Active" : "Hidden"}
                         </span>
                       </td>
                       <td>
                         <div className="actions-cell">
                           <button
-                            onClick={() => handleToggleActive(product.product_id, product.is_active !== false)}
-                            className="action-btn toggle-btn"
-                            aria-label={product.is_active !== false ? "Hide Product" : "Show Product"}
-                            title={product.is_active !== false ? "Hide Product" : "Show Product"}
+                            onClick={() => handleEditClick(product)}
+                            className="action-btn edit-btn"
+                            aria-label="Edit"
+                            title="Edit Product"
                           >
-                            {product.is_active !== false ? <EyeOff size={18} /> : <Eye size={18} />}
+                            <Edit2 size={18} />
+                          </button>
+                          <button
+                            onClick={() =>
+                              handleToggleActive(
+                                product.product_id,
+                                product.is_active !== false,
+                              )
+                            }
+                            className="action-btn toggle-btn"
+                            aria-label={
+                              product.is_active !== false
+                                ? "Hide Product"
+                                : "Show Product"
+                            }
+                            title={
+                              product.is_active !== false
+                                ? "Hide Product"
+                                : "Show Product"
+                            }
+                          >
+                            {product.is_active !== false ? (
+                              <EyeOff size={18} />
+                            ) : (
+                              <Eye size={18} />
+                            )}
                           </button>
                           <button
                             onClick={() => handleDelete(product.product_id)}

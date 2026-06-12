@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import { Search } from "lucide-react";
 import { useAuthContext, useCartContext } from "../../../context";
 import { ROUTES } from "../../../constants";
 import "./Navbar.css";
@@ -56,23 +55,13 @@ const Navbar: React.FC = () => {
           )}
         </ul>
 
-        {/* Search Bar */}
-        <div className="navbar__search">
-          <Search size={18} className="search-icon" color="#94a3b8" />
-          <input
-            type="text"
-            placeholder="Search products..."
-            className="search-input"
-          />
-        </div>
-
         {/* Right side */}
         <div className="navbar__actions">
           {/* Cart */}
           <Link
             to={ROUTES.CART}
             className="navbar__cart-btn"
-            aria-label="ตะกร้าสินค้า"
+            aria-label="Shopping Cart"
           >
             <img src="/logo/cart.png" alt="cart logo" className="cart-img" />
             {totalItems > 0 && (

@@ -32,17 +32,17 @@ export const STORAGE_KEYS = {
 
 // ─── Sort Options ─────────────────────────────────────────────────────────────
 export const SORT_OPTIONS = [
-  { label: "ใหม่ล่าสุด", value: "newest" },
-  { label: "ราคา: น้อย → มาก", value: "price_asc" },
-  { label: "ราคา: มาก → น้อย", value: "price_desc" },
-  { label: "คะแนนสูงสุด", value: "rating" },
+  { label: "Newest", value: "newest" },
+  { label: "Price: Low to High", value: "price_asc" },
+  { label: "Price: High to Low", value: "price_desc" },
+  { label: "Top Rated", value: "rating" },
 ] as const;
 
 // ─── Order Status Labels ──────────────────────────────────────────────────────
 export const ORDER_STATUS_LABEL: Record<string, string> = {
-  pending: "รอดำเนินการ",
-  processing: "กำลังเตรียม",
-  shipped: "จัดส่งแล้ว",
-  delivered: "ส่งถึงแล้ว",
-  cancelled: "ยกเลิกแล้ว",
+  pending: "Pending",
+  processing: "Processing",
+  shipped: "Shipped",
+  delivered: "Delivered",
+  cancelled: "Cancelled",
 };
