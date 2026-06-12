@@ -5,7 +5,6 @@ import { formatPrice } from "../../../utils";
 import type { Product } from "../../../types";
 import { useCartContext } from "../../../context";
 import { ShoppingBag } from "lucide-react";
-import toast from "react-hot-toast";
 import "./ProductCard.css";
 
 interface ProductCardProps {
@@ -24,7 +23,6 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
     e.preventDefault();
     e.stopPropagation();
     addItem(product, 1);
-    toast.success(`Added ${product.title} to cart`);
   };
 
   return (

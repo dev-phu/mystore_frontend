@@ -1,20 +1,33 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import type { CartItem, Product } from "../types";
-import { STORAGE_KEYS } from "../constants";
+import { orderService } from "../services/order.service";
+import { useAuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
 
 export const useCart = () => {
-  const [items, setItems] = useState<CartItem[]>(() => {
-    try {
-      const stored = localStorage.getItem(STORAGE_KEYS.CART);
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
+  const { user } = useAuthContext();
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const fetchCart = useCallback(async () => {
+    if (!user || user.role !== "BUYER") {
+      setItems([]);
+      return;
     }
-  });
+    try {
+      setLoading(true);
+      const data = await orderService.getCart();
+      setItems(data);
+    } catch (err: any) {
+      console.error("Failed to fetch cart", err);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.CART, JSON.stringify(items));
-  }, [items]);
+    fetchCart();
+  }, [fetchCart]);
 
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
   const totalPrice = items.reduce(
@@ -22,33 +35,57 @@ export const useCart = () => {
     0,
   );
 
-  const addItem = (product: Product, quantity = 1) => {
-    setItems((prev) => {
-      const existing = prev.find((i) => i.product.product_id === product.product_id);
-      if (existing) {
-        return prev.map((i) =>
-          i.product.product_id === product.product_id
-            ? { ...i, quantity: i.quantity + quantity }
-            : i,
-        );
-      }
-      const newItem: CartItem = {
-        cart_id: Date.now(), // Generate a temporary cart_id for local state
-        product,
-        quantity: 1
-      };
-      return [...prev, newItem];
-    });
+  const addItem = async (product: Product, quantity = 1) => {
+    if (!user) {
+      toast.error("Please login to add items to cart");
+      return;
+    }
+    if (user.role !== "BUYER") {
+      toast.error("Only buyers can add items to cart");
+      return;
+    }
+
+    try {
+      setLoading(true);
+      await orderService.addToCart({
+        product_id: product.product_id,
+        quantity,
+      });
+      await fetchCart();
+      toast.success(`Added ${product.title} to cart`);
+    } catch (err: any) {
+      toast.error(err.response?.data?.detail || "Failed to add item to cart");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const removeItem = (productId: number) =>
-    setItems((prev) => prev.filter((i) => i.product.product_id !== productId));
+  const removeItem = async (cartId: number) => {
+    try {
+      setLoading(true);
+      await orderService.removeFromCart({ cart_id: cartId });
+      await fetchCart();
+      toast.success("Item removed from cart");
+    } catch (err: any) {
+      toast.error(err.response?.data?.detail || "Failed to remove item");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const updateQuantity = (productId: number, quantity: number) => {
-    if (quantity <= 0) return removeItem(productId);
-    setItems((prev) =>
-      prev.map((i) => (i.product.product_id === productId ? { ...i, quantity } : i)),
-    );
+  const updateQuantity = async (cartId: number, quantity: number) => {
+    if (quantity <= 0) {
+      return removeItem(cartId);
+    }
+    try {
+      setLoading(true);
+      await orderService.updateCartItem({ cart_id: cartId, quantity });
+      await fetchCart();
+    } catch (err: any) {
+      toast.error(err.response?.data?.detail || "Failed to update quantity");
+    } finally {
+      setLoading(false);
+    }
   };
 
   const clearCart = () => setItems([]);
@@ -57,6 +94,8 @@ export const useCart = () => {
     items,
     totalItems,
     totalPrice,
+    loading,
+    fetchCart,
     addItem,
     removeItem,
     updateQuantity,

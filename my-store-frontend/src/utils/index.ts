@@ -30,7 +30,10 @@ export const truncate = (text: string, maxLength: number): string =>
 export const getImageUrl = (path: string): string => {
   if (!path) return "/placeholder.png";
   if (path.startsWith("http")) return path;
-  return `${import.meta.env.VITE_API_BASE_URL ?? "http://localhost:8000"}${path}`;
+  
+  const cleanPath = path.startsWith("/") ? path : `/${path}`;
+  const baseUrl = import.meta.env.VITE_API_BASE_URL?.replace(/\/$/, "") ?? "http://localhost:8000";
+  return `${baseUrl}${cleanPath}`;
 };
 
 /**

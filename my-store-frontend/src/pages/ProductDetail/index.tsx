@@ -6,7 +6,6 @@ import { useCartContext } from "../../context";
 import { ROUTES } from "../../constants";
 import { formatPrice } from "../../utils";
 import { ArrowLeft, ShoppingBag, Minus, Plus } from "lucide-react";
-import toast from "react-hot-toast";
 import "./ProductDetail.css";
 
 const ProductDetail: React.FC = () => {
@@ -41,7 +40,6 @@ const ProductDetail: React.FC = () => {
   const handleAddToCart = () => {
     if (product) {
       addItem(product, quantity);
-      toast.success(`Added ${product.title} to cart (${quantity} items)`);
     }
   };
 
