@@ -30,8 +30,15 @@ const Login: React.FC = () => {
     try {
       await login(username, password);
       navigate(from, { replace: true });
-    } catch {
-      setError('ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง');
+    } catch (err: any) {
+      console.error("Login error:", err);
+      if (err.response) {
+        setError(`Error: ${err.response.status} - ${JSON.stringify(err.response.data)}`);
+      } else if (err.request) {
+        setError('Network Error: ไม่สามารถเชื่อมต่อกับเซิร์ฟเวอร์ได้');
+      } else {
+        setError(`Error: ${err.message}`);
+      }
     } finally {
       setLoading(false);
     }
@@ -48,12 +55,12 @@ const Login: React.FC = () => {
       <div className="auth-card">
         {/* Logo */}
         <div className="auth-logo">
-          <span className="auth-logo__icon"><img src="/public/assets/shop.png" alt="" /></span>
+          <span className="auth-logo__icon"><img src="/logo/logo1.PNG" alt="Hanni Logo" className="logo-img" /></span>
           <span className="auth-logo__text">Hanni</span>
         </div>
 
         <h1 className="auth-title"></h1>
-        <p className="auth-subtitle">Login for more experience</p>
+        <p className="auth-subtitle">Welcome back</p>
 
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           {/* Error */}
@@ -97,7 +104,7 @@ const Login: React.FC = () => {
                 onClick={() => setShowPassword(!showPassword)}
                 aria-label="show/hide password"
               >
-                {showPassword ? <EyeOff size={20} color="#ffffff" /> : <Eye size={20} color="#ffffff" />}
+                {showPassword ? <EyeOff size={20} color="#000000" /> : <Eye size={20} color="#000000" />}
               </button>
             </div>
           </div>

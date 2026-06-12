@@ -91,7 +91,18 @@
 }
 
 .auth-logo__icon {
-  font-size: 1.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-img {
+  width: 48px; /* ปรับขนาดความกว้างที่นี่ */
+  height: 48px; /* ปรับขนาดความสูงที่นี่ */
+  object-fit: contain;
+  background-color: #f1f5f9; /* เปลี่ยนสีพื้นหลังรูปได้ที่นี่ */
+  padding: 8px; /* ระยะขอบด้านใน */
+  border-radius: 50%; /* ทำให้ขอบมน (ถ้าต้องการให้เป็นสี่เหลี่ยมให้ลบบรรทัดนี้ออก) */
 }
 
 .auth-logo__text {

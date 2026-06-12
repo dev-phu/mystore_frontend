@@ -3,11 +3,12 @@ export interface User {
   id: number;
   username: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  avatar?: string;
-  role: 'customer' | 'admin';
-  createdAt: string;
+  first_name: string;
+  last_name: string;
+  role: 'BUYER' | 'SELLER';
+  is_staff?: boolean;
+  is_superuser?: boolean;
+  date_joined?: string;
 }
 
 // ─── Product ─────────────────────────────────────────────────────────────────
@@ -18,56 +19,46 @@ export interface Category {
 }
 
 export interface Product {
-  id: number;
-  name: string;
-  description: string;
-  price: number;
-  stock: number;
-  image: string;
-  category: Category;
-  rating: number;
-  reviewCount: number;
-  createdAt: string;
+  product_id: number;
+  title: string;
+  description: string | null;
+  image_url: string | null;
+  unit_price: number;
+  available_quantity: number;
+  seller?: User | number; // สามารถเป็น object User หรือแค่ ID ก็ได้ขึ้นอยู่กับ API
 }
 
 // ─── Cart ─────────────────────────────────────────────────────────────────────
 export interface CartItem {
+  cart_id: number;
   product: Product;
   quantity: number;
 }
 
+// โครงสร้างตะกร้าโดยรวมที่ Frontend ใช้แสดงผล
 export interface Cart {
   items: CartItem[];
   totalItems: number;
-  totalPrice: number;
+  total_amount: number;
 }
 
 // ─── Order ────────────────────────────────────────────────────────────────────
 export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 export interface OrderItem {
+  order_item_id: number;
   product: Product;
   quantity: number;
-  unitPrice: number;
-}
-
-export interface ShippingAddress {
-  fullName: string;
-  phone: string;
-  address: string;
-  district: string;
-  province: string;
-  postalCode: string;
+  unit_price: number;
 }
 
 export interface Order {
-  id: number;
-  status: OrderStatus;
-  items: OrderItem[];
-  shippingAddress: ShippingAddress;
-  totalPrice: number;
-  createdAt: string;
-  updatedAt: string;
+  order_id: number;
+  total_amount: number;
+  status: string;
+  create_at: string;
+  items?: OrderItem[];
+  buyer?: User | number;
 }
 
 // ─── API ──────────────────────────────────────────────────────────────────────
@@ -98,8 +89,9 @@ export interface RegisterPayload {
   username: string;
   email: string;
   password: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
+  role: 'BUYER' | 'SELLER';
 }
 
 // ─── UI ───────────────────────────────────────────────────────────────────────
