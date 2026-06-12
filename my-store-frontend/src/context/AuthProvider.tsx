@@ -1,18 +1,24 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { AuthContext } from './AuthContext';
-import { authService } from '../services';
-import { STORAGE_KEYS } from '../constants';
-import type { User } from '../types';
+import React, { useState, useEffect, useCallback } from "react";
+import { AuthContext } from "./AuthContext";
+import { authService } from "../services";
+import { STORAGE_KEYS } from "../constants";
+import type { User } from "../types";
 
-export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const [user, setUser] = useState<User | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   // โหลดข้อมูล user จาก token เมื่อ app เริ่ม
   useEffect(() => {
     const token = localStorage.getItem(STORAGE_KEYS.ACCESS_TOKEN);
-    if (!token) { setIsLoading(false); return; }
-    authService.getProfile()
+    if (!token) {
+      setIsLoading(false);
+      return;
+    }
+    authService
+      .getProfile()
       .then(setUser)
       .catch(() => {
         localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
@@ -36,7 +42,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, isAuthenticated: !!user, login, logout }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, isAuthenticated: !!user, login, logout }}
+    >
       {children}
     </AuthContext.Provider>
   );

@@ -1,5 +1,5 @@
-import { createContext, useContext } from 'react';
-import type { CartItem, Product } from '../types';
+import { createContext, useContext } from "react";
+import type { CartItem, Product } from "../types";
 
 export interface CartContextType {
   items: CartItem[];
@@ -15,6 +15,6 @@ export const CartContext = createContext<CartContextType | null>(null);
 
 export const useCartContext = () => {
   const ctx = useContext(CartContext);
-  if (!ctx) throw new Error('useCartContext must be used within CartProvider');
+  if (!ctx) throw new Error("useCartContext must be used within CartProvider");
   return ctx;
 };

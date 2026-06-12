@@ -1,7 +1,7 @@
-import React from 'react';
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import { useAuthContext } from '../context';
-import { ROUTES } from '../constants';
+import React from "react";
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import { useAuthContext } from "../context";
+import { ROUTES } from "../constants";
 
 /**
  * ครอบ route ที่ต้อง login ก่อนเข้า
@@ -16,9 +16,11 @@ const PrivateRoute: React.FC = () => {
     return <div className="loading-screen">กำลังโหลด...</div>;
   }
 
-  return isAuthenticated
-    ? <Outlet />
-    : <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    <Navigate to={ROUTES.LOGIN} state={{ from: location }} replace />
+  );
 };
 
 export default PrivateRoute;

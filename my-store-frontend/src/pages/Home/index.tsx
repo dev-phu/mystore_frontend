@@ -1,28 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { ROUTES } from '../../constants';
-import { Truck, ShieldCheck, Clock, RefreshCw, ChevronLeft, ChevronRight } from 'lucide-react';
-import './Home.css';
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../constants";
+import {
+  Truck,
+  ShieldCheck,
+  Clock,
+  RefreshCw,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import "./Home.css";
 
 const HERO_SLIDES = [
   {
     id: 1,
-    image: '/logo/bg-sale.png',
-    title: 'Elevate Your Style',
-    subtitle: 'Discover our latest collection of premium fashion designed for everyday elegance.'
+    image: "/logo/bg-sale.png",
+    title: "Elevate Your Style",
+    subtitle:
+      "Discover our latest collection of premium fashion designed for everyday elegance.",
   },
   {
     id: 2,
-    image: 'https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=2000',
-    title: 'Winter Collection 2026',
-    subtitle: 'Stay warm without compromising your minimal aesthetics.'
+    image:
+      "https://images.unsplash.com/photo-1445205170230-053b83016050?auto=format&fit=crop&q=80&w=2000",
+    title: "Winter Collection 2026",
+    subtitle: "Stay warm without compromising your minimal aesthetics.",
   },
   {
     id: 3,
-    image: '/logo/minimal.jpg',
-    title: 'Minimalist Accessories',
-    subtitle: 'The perfect details to complete your everyday look.'
-  }
+    image: "/logo/minimal.jpg",
+    title: "Minimalist Accessories",
+    subtitle: "The perfect details to complete your everyday look.",
+  },
 ];
 
 const Home: React.FC = () => {
@@ -35,16 +44,20 @@ const Home: React.FC = () => {
     return () => clearInterval(timer);
   }, []);
 
-  const nextSlide = () => setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
-  const prevSlide = () => setCurrentSlide((prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length);
+  const nextSlide = () =>
+    setCurrentSlide((prev) => (prev + 1) % HERO_SLIDES.length);
+  const prevSlide = () =>
+    setCurrentSlide(
+      (prev) => (prev - 1 + HERO_SLIDES.length) % HERO_SLIDES.length,
+    );
   return (
     <div className="home-page">
       {/* Hero Section */}
       <section className="hero">
         {HERO_SLIDES.map((slide, index) => (
-          <div 
-            key={slide.id} 
-            className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
+          <div
+            key={slide.id}
+            className={`hero-slide ${index === currentSlide ? "active" : ""}`}
             style={{ backgroundImage: `url(${slide.image})` }}
           >
             <div className="hero-overlay" />
@@ -57,17 +70,29 @@ const Home: React.FC = () => {
             </div>
           </div>
         ))}
-        
+
         {/* Slider Controls */}
-        <button className="slider-btn slider-btn-left" onClick={prevSlide} aria-label="Previous slide"><ChevronLeft size={32} /></button>
-        <button className="slider-btn slider-btn-right" onClick={nextSlide} aria-label="Next slide"><ChevronRight size={32} /></button>
-        
+        <button
+          className="slider-btn slider-btn-left"
+          onClick={prevSlide}
+          aria-label="Previous slide"
+        >
+          <ChevronLeft size={32} />
+        </button>
+        <button
+          className="slider-btn slider-btn-right"
+          onClick={nextSlide}
+          aria-label="Next slide"
+        >
+          <ChevronRight size={32} />
+        </button>
+
         {/* Slider Indicators */}
         <div className="slider-indicators">
           {HERO_SLIDES.map((_, index) => (
-            <button 
-              key={index} 
-              className={`indicator-dot ${index === currentSlide ? 'active' : ''}`}
+            <button
+              key={index}
+              className={`indicator-dot ${index === currentSlide ? "active" : ""}`}
               onClick={() => setCurrentSlide(index)}
               aria-label={`Go to slide ${index + 1}`}
             />
@@ -105,9 +130,9 @@ const Home: React.FC = () => {
         <div className="categories-grid">
           {/* Men Category */}
           <Link to={ROUTES.PRODUCTS} className="category-card">
-            <img 
-              src="/logo/mencollection.png" 
-              alt="Men Fashion" 
+            <img
+              src="/logo/mencollection.png"
+              alt="Men Fashion"
               className="category-img"
             />
             <div className="category-overlay">
@@ -118,9 +143,9 @@ const Home: React.FC = () => {
 
           {/* Women Category */}
           <Link to={ROUTES.PRODUCTS} className="category-card">
-            <img 
-              src="/logo/womencollection.png" 
-              alt="Women Fashion" 
+            <img
+              src="/logo/womencollection.png"
+              alt="Women Fashion"
               className="category-img"
             />
             <div className="category-overlay">
@@ -131,9 +156,9 @@ const Home: React.FC = () => {
 
           {/* Accessories Category */}
           <Link to={ROUTES.PRODUCTS} className="category-card">
-            <img 
-              src="/logo/asscessories.png" 
-              alt="Accessories" 
+            <img
+              src="/logo/asscessories.png"
+              alt="Accessories"
               className="category-img"
             />
             <div className="category-overlay">

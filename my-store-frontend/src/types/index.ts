@@ -5,7 +5,7 @@ export interface User {
   email: string;
   first_name: string;
   last_name: string;
-  role: 'BUYER' | 'SELLER';
+  role: "BUYER" | "SELLER";
   is_staff?: boolean;
   is_superuser?: boolean;
   date_joined?: string;
@@ -43,7 +43,12 @@ export interface Cart {
 }
 
 // ─── Order ────────────────────────────────────────────────────────────────────
-export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
+export type OrderStatus =
+  | "pending"
+  | "processing"
+  | "shipped"
+  | "delivered"
+  | "cancelled";
 
 export interface OrderItem {
   order_item_id: number;
@@ -91,11 +96,11 @@ export interface RegisterPayload {
   password: string;
   first_name: string;
   last_name: string;
-  role: 'BUYER' | 'SELLER';
+  role: "BUYER" | "SELLER";
 }
 
 // ─── UI ───────────────────────────────────────────────────────────────────────
-export type SortOption = 'price_asc' | 'price_desc' | 'newest' | 'rating';
+export type SortOption = "price_asc" | "price_desc" | "newest" | "rating";
 
 export interface FilterState {
   category?: number;

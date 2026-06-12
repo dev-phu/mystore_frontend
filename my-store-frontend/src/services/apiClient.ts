@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { API_BASE_URL, STORAGE_KEYS } from '../constants';
+import axios from "axios";
+import { API_BASE_URL, STORAGE_KEYS } from "../constants";
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
@@ -24,10 +24,10 @@ apiClient.interceptors.response.use(
     if (error.response?.status === 401) {
       localStorage.removeItem(STORAGE_KEYS.ACCESS_TOKEN);
       localStorage.removeItem(STORAGE_KEYS.REFRESH_TOKEN);
-      window.location.href = '/auth/login';
+      window.location.href = "/auth/login";
     }
     return Promise.reject(error);
-  }
+  },
 );
 
 export default apiClient;

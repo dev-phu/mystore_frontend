@@ -28,7 +28,7 @@
 .auth-bg__orb--1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, rgba(0,0,0,0.03), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.03), transparent 70%);
   top: -150px;
   left: -150px;
   animation: floatOrb 8s ease-in-out infinite;
@@ -37,14 +37,13 @@
 .auth-bg__orb--2 {
   width: 400px;
   height: 400px;
-  background: radial-gradient(circle, rgba(0,0,0,0.02), transparent 70%);
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.02), transparent 70%);
   bottom: -120px;
   right: -120px;
   animation: floatOrb 10s ease-in-out infinite reverse;
 }
 
 @keyframes floatOrb {
-
   0%,
   100% {
     transform: translate(0, 0);
@@ -144,7 +143,6 @@
 }
 
 @keyframes shake {
-
   0%,
   100% {
     transform: translateX(0);
@@ -187,7 +185,10 @@
   color: var(--color-text);
   font-size: 0.9375rem;
   outline: none;
-  transition: border-color 0.2s, background 0.2s, box-shadow 0.2s;
+  transition:
+    border-color 0.2s,
+    background 0.2s,
+    box-shadow 0.2s;
 }
 
 .form-input::placeholder {
@@ -239,7 +240,10 @@
   border: none;
   border-radius: 10px;
   cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s, box-shadow 0.2s;
+  transition:
+    opacity 0.2s,
+    transform 0.15s,
+    box-shadow 0.2s;
   display: flex;
   align-items: center;
   justify-content: center;
