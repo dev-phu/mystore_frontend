@@ -280,3 +280,42 @@
     padding: 4rem 5%;
   }
 }
+
+/* --- Featured Products Section --- */
+.featured-section {
+  padding: 4rem 5%;
+  max-width: 1400px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 2.5rem;
+}
+
+.view-all-link {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s;
+}
+
+.view-all-link:hover {
+  color: var(--color-text);
+}
+
+.featured-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 2rem;
+}
+
+.featured-loading,
+.featured-empty {
+  text-align: center;
+  padding: 3rem;
+  color: var(--color-text-muted);
+}

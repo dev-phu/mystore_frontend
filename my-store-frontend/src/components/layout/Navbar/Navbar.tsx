@@ -47,7 +47,7 @@ const Navbar: React.FC = () => {
           {user?.role === "SELLER" && (
             <li>
               <NavLink
-                to={ROUTES.ADMIN.DASHBOARD}
+                to={ROUTES.ADMIN.PRODUCTS}
                 className={({ isActive }) => (isActive ? "active" : "")}
               >
                 MY SHOP

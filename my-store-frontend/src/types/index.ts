@@ -25,6 +25,7 @@ export interface Product {
   image_url: string | null;
   unit_price: number;
   available_quantity: number;
+  is_active?: boolean;
   seller?: User | number; // สามารถเป็น object User หรือแค่ ID ก็ได้ขึ้นอยู่กับ API
 }
 

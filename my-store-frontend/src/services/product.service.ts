@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import type { Product, PaginatedResponse } from "../types";
+import type { Product } from "../types";
 import type { FilterState } from "../types";
 
 export const productService = {
@@ -11,13 +11,14 @@ export const productService = {
     if (filters.maxPrice) params.set("max_price", String(filters.maxPrice));
     if (filters.sort) params.set("ordering", filters.sort);
     if (filters.page) params.set("page", String(filters.page));
-    return apiClient
-      .get<PaginatedResponse<Product>>(`/products/?${params}`)
-      .then((r) => r.data);
+    return apiClient.get<Product[]>(`/products/?${params}`).then((r) => r.data);
   },
 
   getById: (id: number) =>
     apiClient.get<Product>(`/products/${id}/`).then((r) => r.data),
+
+  getMyProducts: () =>
+    apiClient.get<Product[]>("/products/mysellerproduct/").then((r) => r.data),
 
   create: (data: FormData) =>
     apiClient
@@ -28,10 +29,15 @@ export const productService = {
 
   update: (id: number, data: FormData) =>
     apiClient
-      .patch<Product>(`/products/${id}/`, data, {
+      .put<Product>(`/products/mysellerproduct/${id}/`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       })
       .then((r) => r.data),
 
-  delete: (id: number) => apiClient.delete(`/products/${id}/`),
+  toggleActive: (id: number, is_active: boolean) =>
+    apiClient
+      .put<Product>(`/products/mysellerproduct/${id}/`, { is_active })
+      .then((r) => r.data),
+
+  delete: (id: number) => apiClient.delete(`/products/mysellerproduct/${id}/`),
 };
