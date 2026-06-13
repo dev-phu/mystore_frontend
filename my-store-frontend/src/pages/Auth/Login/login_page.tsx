@@ -1,5 +1,5 @@
 import React, { useState, type FormEvent } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Link, useNavigate, } from "react-router-dom";
 import { useAuthContext } from "../../../context";
 import { ROUTES } from "../../../constants";
 import { Eye, EyeOff } from "lucide-react";
@@ -8,7 +8,7 @@ import "./login_page.css";
 const Login: React.FC = () => {
   const { login } = useAuthContext();
   const navigate = useNavigate();
-  const location = useLocation();
+  
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
