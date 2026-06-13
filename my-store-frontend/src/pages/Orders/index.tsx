@@ -82,7 +82,7 @@ const Orders: React.FC = () => {
             </div>
 
             <div className="order-items-list">
-              {order.items?.map((item: { order_item_id: number; quantity: number; product_title?: string; product: number; unit_price: number; status: string }) => (
+              {order.items?.map((item) => (
                 <div key={item.order_item_id} className="order-item">
                   <div className="order-item-info">
                     <div className="order-item-title">
