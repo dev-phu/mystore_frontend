@@ -111,6 +111,27 @@
   margin-right: 0.5rem;
 }
 
+.order-item-info {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.order-item-status {
+  font-size: 0.75rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 9999px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.order-item-status.status-pending { background-color: rgba(217, 119, 6, 0.1); color: #d97706; }
+.order-item-status.status-processing { background-color: rgba(59, 130, 246, 0.1); color: #3b82f6; }
+.order-item-status.status-shipped { background-color: rgba(139, 92, 246, 0.1); color: #8b5cf6; }
+.order-item-status.status-delivered { background-color: rgba(5, 150, 105, 0.1); color: #059669; }
+.order-item-status.status-cancelled { background-color: rgba(220, 38, 38, 0.1); color: #dc2626; }
+
 .order-item-price {
   font-weight: 500;
 }

@@ -18,6 +18,7 @@ const Register = React.lazy(
 const AdminDashboard = React.lazy(() => import("../pages/Admin/Dashboard"));
 const AdminProducts = React.lazy(() => import("../pages/Admin/Products/product_page"));
 const AdminOrders = React.lazy(() => import("../pages/Admin/Orders"));
+const SellerOrders = React.lazy(() => import("../pages/SellerOrders"));
 
 // Layouts
 import MainLayout from "../components/layout/MainLayout";
@@ -47,6 +48,7 @@ const AppRouter: React.FC = () => (
             <Route path={ROUTES.ADMIN.DASHBOARD} element={<AdminDashboard />} />
             <Route path={ROUTES.ADMIN.PRODUCTS} element={<AdminProducts />} />
             <Route path={ROUTES.ADMIN.ORDERS} element={<AdminOrders />} />
+            <Route path={ROUTES.SELLER_ORDERS} element={<SellerOrders />} />
           </Route>
         </Route>
 

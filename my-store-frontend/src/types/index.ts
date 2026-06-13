@@ -54,8 +54,16 @@ export type OrderStatus =
 export interface OrderItem {
   order_item_id: number;
   product: Product;
+  product_title?: string;
   quantity: number;
   unit_price: number;
+  status?: OrderStatus | string;
+}
+
+export interface SellerOrderItem extends OrderItem {
+  order_id: number;
+  buyer_name: string;
+  order_date: string;
 }
 
 export interface Order {

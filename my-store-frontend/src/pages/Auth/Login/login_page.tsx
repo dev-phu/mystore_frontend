@@ -16,9 +16,8 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
 
-  // หน้าที่ต้องการไปหลัง login (ถ้า redirect มาจาก PrivateRoute)
-  const from =
-    (location.state as { from?: Location })?.from?.pathname ?? ROUTES.HOME;
+  // หน้าที่ต้องการไปหลัง login (เปลี่ยนให้อยู่ที่ Home เสมอ)
+  const from = ROUTES.HOME;
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();

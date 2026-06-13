@@ -83,9 +83,14 @@ const Orders: React.FC = () => {
             <div className="order-items-list">
               {order.items?.map((item: any) => (
                 <div key={item.order_item_id} className="order-item">
-                  <div className="order-item-title">
-                    <span className="order-item-qty">{item.quantity}x</span>{" "}
-                    {item.product_title || `Product #${item.product}`}
+                  <div className="order-item-info">
+                    <div className="order-item-title">
+                      <span className="order-item-qty">{item.quantity}x</span>{" "}
+                      {item.product_title || `Product #${item.product}`}
+                    </div>
+                    <div className={`order-item-status status-${item.status?.toLowerCase() || 'pending'}`}>
+                      {ORDER_STATUS_LABEL[item.status?.toLowerCase() || 'pending'] || item.status || 'Pending'}
+                    </div>
                   </div>
                   <div className="order-item-price">
                     {formatPrice(item.unit_price * item.quantity)}

@@ -88,9 +88,15 @@ const Navbar: React.FC = () => {
               </button>
               {menuOpen && (
                 <div className="navbar__dropdown">
-                  <Link to={ROUTES.ORDERS} onClick={() => setMenuOpen(false)}>
-                    Order History
-                  </Link>
+                  {user?.role === "SELLER" ? (
+                    <Link to={ROUTES.SELLER_ORDERS} onClick={() => setMenuOpen(false)}>
+                      Manage Orders
+                    </Link>
+                  ) : (
+                    <Link to={ROUTES.ORDERS} onClick={() => setMenuOpen(false)}>
+                      Order History
+                    </Link>
+                  )}
                   <Link to={ROUTES.PROFILE} onClick={() => setMenuOpen(false)}>
                     Profile
                   </Link>

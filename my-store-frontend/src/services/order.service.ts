@@ -1,5 +1,5 @@
 import apiClient from "./apiClient";
-import type { CartItem, Order } from "../types";
+import type { CartItem, Order, SellerOrderItem } from "../types";
 
 export interface AddToCartPayload {
   product_id: number;
@@ -41,6 +41,13 @@ export const orderService = {
   // ─── Order History ────────────────────────────────────────────────────
   getOrderHistory: () =>
     apiClient.get<Order[]>("/orders/").then((r) => r.data),
+
+  // ─── Seller Orders ──────────────────────────────────────────────────────
+  getSellerOrders: () =>
+    apiClient.get<SellerOrderItem[]>("/orders/mysellerorders/").then((r) => r.data),
+  
+  updateSellerOrderItemStatus: (id: number, status: string) =>
+    apiClient.patch(`/orders/mysellerorders/${id}/`, { status }).then((r) => r.data),
 
   // Dummy endpoints for admin (if needed later)
   getAllOrders: (page = 1) =>

@@ -18,6 +18,7 @@ export const ROUTES = {
     PRODUCTS: "/admin/products",
     ORDERS: "/admin/orders",
   },
+  SELLER_ORDERS: "/seller/orders",
 } as const;
 
 // ─── Pagination ───────────────────────────────────────────────────────────────
