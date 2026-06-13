@@ -13,5 +13,8 @@ export const authService = {
       .post<{ access: string }>("/token/refresh/", { refresh })
       .then((r) => r.data),
 
-  getProfile: () => apiClient.get<User>("/profile/").then((r) => r.data), // Profile endpoint needs to be created on backend
+  getProfile: () => apiClient.get<User>("/profile/").then((r) => r.data),
+
+  updateProfile: (payload: Partial<User>) =>
+    apiClient.put<User>("/profile/", payload).then((r) => r.data),
 };

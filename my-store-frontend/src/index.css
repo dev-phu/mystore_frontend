@@ -3,19 +3,23 @@
 
 /* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
 :root {
-  /* Colors */
+  /* Colors - Minimalist Monochrome Theme */
   --color-bg: #ffffff;
-  --color-surface: #f8fafc;
-  --color-surface-2: #f1f5f9;
-  --color-border: rgba(0, 0, 0, 0.1);
-  --color-text: #0f172a;
-  --color-text-muted: rgba(15, 23, 42, 0.6);
-  --color-primary: #000000;
-  --color-primary-dark: #333333;
-  --color-accent: #475569;
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-danger: #ef4444;
+  --color-surface: #f9fafb;
+  --color-surface-2: #f3f4f6;
+  --color-border: #e5e7eb;
+  --color-border-focus: #212121;
+  --color-text: #212121;
+  --color-text-muted: #6b7280;
+  
+  --color-primary: #212121;
+  --color-primary-dark: #171717;
+  --color-primary-light: #f3f4f6;
+  
+  /* Semantic colors (kept minimal and slightly muted) */
+  --color-success: #059669;
+  --color-warning: #d97706;
+  --color-danger: #dc2626;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -25,18 +29,20 @@
   --space-xl: 2rem;
   --space-2xl: 3rem;
 
-  /* Border radius */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  /* Border radius - Sharper for modern minimal look */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
 
-  /* Shadows */
-  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.3);
-  --shadow-glow: 0 0 40px rgba(0, 0, 0, 0.05);
+  /* Shadows - Very subtle and clean */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 10px 30px -5px rgba(0, 0, 0, 0.04);
+  --shadow-glow: 0 0 0 3px rgba(0, 0, 0, 0.08); /* Black focus ring */
 
   /* Transitions */
-  --transition: all 0.2s ease;
+  --transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ─── Reset ─────────────────────────────────────────────────────────────────── */
