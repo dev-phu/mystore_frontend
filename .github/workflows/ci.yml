@@ -23,7 +23,7 @@ jobs:
 
       - name: Install dependencies
         working-directory: my-store-frontend
-        run: npm ci
+        run: npm install
 
       - name: Lint check
         working-directory: my-store-frontend
