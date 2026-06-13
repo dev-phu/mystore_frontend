@@ -1,57 +1,66 @@
-# Hanni Store (Frontend)
+# Hanni & Bunny Store (Frontend) 🐰🛍️
 
-โปรเจกต์ React + TypeScript สำหรับระบบร้านค้าออนไลน์ Hanni Store 
-พัฒนาด้วย Vite เพื่อความรวดเร็ว โครงสร้างโปรเจกต์ถูกออกแบบมาให้รองรับการสเกล (Scalable) และง่ายต่อการทำงานเป็นทีม
+A modern, minimalist E-commerce platform built with React and TypeScript. This project features a clean, monochrome design with smooth animations and dynamic role-based features.
+
+## 🌟 Features
+
+- **Role-Based Access:** Distinct experiences for `BUYER` and `SELLER` accounts.
+- **Minimalist UI:** Clean black-and-white (Monochrome) aesthetic with glassmorphism touches and smooth transitions.
+- **Seller Dashboard:** Sellers can manage their products and update the shipping status of their orders.
+- **Smart Cart System:** Real-time quantity validation, stock checking, and seamless checkout.
+- **Custom Modals:** Beautifully animated custom confirmation dialogs.
+- **Responsive Design:** Optimized for both desktop and mobile viewing.
 
 ## 🛠️ Tech Stack
-- **Framework:** React 19 + Vite
+
+- **Framework:** [React 18](https://react.dev/) + [Vite](https://vitejs.dev/)
 - **Language:** TypeScript
-- **Routing:** React Router v7
+- **Routing:** React Router v6
+- **State Management:** React Context API (AuthContext, CartContext)
 - **HTTP Client:** Axios
-- **Styling:** Vanilla CSS (เน้นความมินิมอลและปรับแต่งง่าย)
 - **Icons:** Lucide React
+- **Notifications:** React Hot Toast
 
-## 📁 Project Structure (โครงสร้างโปรเจกต์)
-เราใช้สถาปัตยกรรมแบบแยกหน้าที่ชัดเจน (Separation of Concerns):
+## 🚀 Getting Started
 
-```text
-src/
-├── components/      # แหล่งรวม UI Component ที่ใช้ซ้ำได้ (ปุ่ม, ฟอร์ม, Navbar)
-├── constants/       # ค่าคงที่ต่างๆ เช่น ชื่อ Route, URL ของ API
-├── context/         # Global State แบบง่ายๆ (เช่น ข้อมูล User ตอน Login)
-├── hooks/           # Custom React Hooks สำหรับจัดการ Logic (เช่น useCart)
-├── pages/           # หน้าเว็บแต่ละหน้า (1 หน้า = 1 โฟลเดอร์)
-├── router/          # ตั้งค่าเส้นทางทั้งหมดของเว็บ (React Router)
-├── services/        # ไฟล์จัดการ API คุยกับฝั่ง Backend (Axios)
-├── types/           # กำหนดชนิดข้อมูล TypeScript (Interface/Type)
-└── utils/           # ฟังก์ชันช่วยเหลือทั่วไป (เช่น แปลงวันที่, แปลงสกุลเงิน)
-```
+Follow these instructions to get a copy of the project up and running on your local machine for development and testing.
 
-## 🚀 วิธีการรันโปรเจกต์ (สำหรับทีม)
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
 
-1. **ติดตั้ง Dependencies:**
+### Installation
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/YOUR_USERNAME/mystore-frontend.git
+   cd mystore-frontend
+   ```
+
+2. **Install dependencies**
    ```bash
    npm install
    ```
 
-2. **ตั้งค่า Environment:**
-   สร้างไฟล์ `.env.local` ไว้ที่โฟลเดอร์นอกสุดของโปรเจกต์นี้ และใส่โค้ด:
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory and add your backend API URL:
    ```env
-   VITE_API_BASE_URL=http://127.0.0.1:8000/api
+   VITE_API_URL=http://localhost:8000/api
    ```
 
-3. **รันเซิร์ฟเวอร์จำลอง (Development):**
+4. **Run the development server**
    ```bash
    npm run dev
    ```
 
-4. **การจัดระเบียบโค้ดอัตโนมัติ (Format Code):**
-   โปรเจกต์นี้มี Prettier รบกวนทุกคนรันคำสั่งนี้ก่อน Push โค้ด:
-   ```bash
-   npx prettier --write "src/**/*.{ts,tsx,css,json}"
-   ```
+5. **Open in Browser**
+   Navigate to `http://localhost:5173` in your browser.
 
-## 💡 กฎการเขียนโค้ดสำหรับทีม
-- **API Calls:** ห้ามยิง API ตรงๆ ใน Component ให้ไปเขียนในโฟลเดอร์ `services/` เสมอ
-- **Styling:** พยายามแยกไฟล์ CSS ออกมาตามหน้าเว็บ หรือ Component นั้นๆ เช่น `Home.css` คู่กับ `Home/index.tsx`
-- **TypeScript:** พยายามใส่ Type ให้ตัวแปร/ฟังก์ชันเสมอ หลีกเลี่ยงการใช้ `any`
+## 📸 Screenshots
+
+*(Add your screenshots here! Example format below)*
+
+![Home Page](./public/logo/minimal.jpg)
+*Minimalist Home Page Design*
+
+---
+**Note:** This frontend is designed to work with the **Hanni & Bunny Store Backend** (built with Django & Django REST Framework). Make sure the backend server is running simultaneously!
