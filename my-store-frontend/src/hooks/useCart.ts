@@ -18,7 +18,7 @@ export const useCart = () => {
       setLoading(true);
       const data = await orderService.getCart();
       setItems(data);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to fetch cart", err);
     } finally {
       setLoading(false);
@@ -53,8 +53,9 @@ export const useCart = () => {
       });
       await fetchCart();
       toast.success(`Added ${product.title} to cart`);
-    } catch (err: any) {
-      toast.error(err.response?.data?.detail || "Failed to add item to cart");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to add item to cart";
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -66,8 +67,9 @@ export const useCart = () => {
       await orderService.removeFromCart({ cart_id: cartId });
       await fetchCart();
       toast.success("Item removed from cart");
-    } catch (err: any) {
-      toast.error(err.response?.data?.detail || "Failed to remove item");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to remove item";
+      toast.error(message);
     } finally {
       setLoading(false);
     }
@@ -81,8 +83,9 @@ export const useCart = () => {
       setLoading(true);
       await orderService.updateCartItem({ cart_id: cartId, quantity });
       await fetchCart();
-    } catch (err: any) {
-      toast.error(err.response?.data?.detail || "Failed to update quantity");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update quantity";
+      toast.error(message);
     } finally {
       setLoading(false);
     }

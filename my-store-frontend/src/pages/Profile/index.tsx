@@ -40,8 +40,9 @@ const Profile: React.FC = () => {
       const updatedUser = await authService.updateProfile(formData);
       updateProfileContext(updatedUser);
       setSuccessMsg("Profile updated successfully!");
-    } catch (err: any) {
-      setErrorMsg(err.response?.data?.detail || "Failed to update profile. Please try again.");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update profile. Please try again.";
+      setErrorMsg(message);
     } finally {
       setIsSubmitting(false);
     }

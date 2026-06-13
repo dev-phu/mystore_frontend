@@ -30,8 +30,9 @@ const Checkout: React.FC = () => {
       toast.success("Order placed successfully!");
       await fetchCart(); // Cart is cleared on backend, this syncs frontend
       navigate(ROUTES.ORDERS);
-    } catch (err: any) {
-      toast.error(err.response?.data?.detail || "Checkout failed");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Checkout failed";
+      toast.error(message);
     } finally {
       setLoading(false);
     }

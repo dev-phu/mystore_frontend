@@ -28,23 +28,23 @@ const AdminProducts: React.FC = () => {
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
 
-  useEffect(() => {
-    fetchMyProducts();
-  }, []);
-
   const fetchMyProducts = async () => {
     try {
       setLoading(true);
       const data = await productService.getMyProducts();
       setProducts(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Failed to fetch my products", err);
       setError("Failed to fetch your products");
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchMyProducts();
+  }, []);
 
   const resetForm = () => {
     setTitle("");
@@ -112,7 +112,7 @@ const AdminProducts: React.FC = () => {
 
       // Refresh product list
       await fetchMyProducts();
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error saving product", err);
       setError(
         editingProduct

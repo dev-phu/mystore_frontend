@@ -29,7 +29,7 @@ const Products: React.FC = () => {
       });
       setProducts(data);
       setError(null);
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Error fetching products:", err);
       setError("Failed to load products. Please try again.");
     } finally {

@@ -15,21 +15,22 @@ const SellerOrders: React.FC = () => {
   const [cancelModalOpen, setCancelModalOpen] = useState(false);
   const [itemToCancel, setItemToCancel] = useState<number | null>(null);
 
-  useEffect(() => {
-    fetchSellerOrders();
-  }, []);
-
   const fetchSellerOrders = async () => {
     try {
       setLoading(true);
       const data = await orderService.getSellerOrders();
       setOrders(data);
-    } catch (err: any) {
-      setError(err.response?.data?.detail || "Failed to fetch your orders");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to fetch your orders";
+      setError(message);
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchSellerOrders();
+  }, []);
 
   const executeStatusUpdate = async (orderItemId: number, newStatus: string) => {
     try {
@@ -43,8 +44,9 @@ const SellerOrders: React.FC = () => {
           item.order_item_id === orderItemId ? { ...item, status: newStatus } : item
         )
       );
-    } catch (err: any) {
-      toast.error(err.response?.data?.detail || "Failed to update status");
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : "Failed to update status";
+      toast.error(message);
     } finally {
       setUpdatingId(null);
     }

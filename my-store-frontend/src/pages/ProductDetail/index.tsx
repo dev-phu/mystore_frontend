@@ -26,7 +26,7 @@ const ProductDetail: React.FC = () => {
         const data = await productService.getById(Number(id));
         setProduct(data);
         setError(null);
-      } catch (err: any) {
+      } catch (err: unknown) {
         console.error("Error fetching product details:", err);
         setError("Failed to load product details or product not found.");
       } finally {

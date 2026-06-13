@@ -30,17 +30,10 @@ const Login: React.FC = () => {
     try {
       await login(username, password);
       navigate(from, { replace: true });
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error("Login error:", err);
-      if (err.response) {
-        setError(
-          `Error: ${err.response.status} - ${JSON.stringify(err.response.data)}`,
-        );
-      } else if (err.request) {
-        setError("Network Error: Unable to connect to server");
-      } else {
-        setError(`Error: ${err.message}`);
-      }
+      const message = err instanceof Error ? err.message : "Login failed. Please try again.";
+      setError(message);
     } finally {
       setLoading(false);
     }

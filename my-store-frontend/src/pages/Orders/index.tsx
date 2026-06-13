@@ -18,8 +18,9 @@ const Orders: React.FC = () => {
         setLoading(true);
         const data = await orderService.getOrderHistory();
         setOrders(data);
-      } catch (err: any) {
-        setError(err.response?.data?.detail || "Failed to fetch order history");
+      } catch (err: unknown) {
+        const message = err instanceof Error ? err.message : "Failed to fetch order history";
+        setError(message);
       } finally {
         setLoading(false);
       }
@@ -81,7 +82,7 @@ const Orders: React.FC = () => {
             </div>
 
             <div className="order-items-list">
-              {order.items?.map((item: any) => (
+              {order.items?.map((item: { order_item_id: number; quantity: number; product_title?: string; product: number; unit_price: number; status: string }) => (
                 <div key={item.order_item_id} className="order-item">
                   <div className="order-item-info">
                     <div className="order-item-title">
