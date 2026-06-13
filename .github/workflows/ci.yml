@@ -1,0 +1,36 @@
+name: Frontend CI
+
+on:
+  push:
+    branches: [main, dev-phu/frontend]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build-and-lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+          cache-dependency-path: my-store-frontend/package-lock.json
+
+      - name: Install dependencies
+        working-directory: my-store-frontend
+        run: npm ci
+
+      - name: Lint check
+        working-directory: my-store-frontend
+        run: npm run lint
+
+      - name: TypeScript & Build check
+        working-directory: my-store-frontend
+        env:
+          VITE_API_URL: http://localhost:8000/api
+        run: npm run build
